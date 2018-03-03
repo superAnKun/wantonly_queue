@@ -72,9 +72,8 @@ int __pop(Queue* queue)
 
 void* __front(Queue* queue)
 {
-	memset(ret, 0, queue->grain + 1);
-	if (queue == NULL) return ret;
-	if (queue->count <= 0) return ret;
+	if (queue == NULL) return 0;
+	if (queue->count <= 0) return 0;
 	return queue->data + queue->tail * queue->grain;
 }
 
