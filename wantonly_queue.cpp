@@ -3,7 +3,7 @@
 #include <string.h>
 typedef struct Queue
 {
-	void* data;
+	void* data, *NIL;
 	int head, tail;
 	int size, count, grain;
 } Queue; 
@@ -17,6 +17,7 @@ Queue* __init(int grain, int size)
 {
 	Queue* queue = (Queue*)malloc(sizeof(Queue));
 	queue->data = (void*)malloc(sizeof(char) * grain * size);
+	queue->NIL = malloc(grain);
 	queue->size = size;
 	queue->grain = grain;
 	queue->count = 0;
@@ -72,8 +73,10 @@ int __pop(Queue* queue)
 
 void* __front(Queue* queue)
 {
-	if (queue == NULL) return 0;
-	if (queue->count <= 0) return 0;
+	//void* val;
+	//memset(val, 0, queue->grain);
+	if (queue == NULL) return queue->NIL;
+	if (queue->count <= 0) return queue->NIL;
 	return queue->data + queue->tail * queue->grain;
 }
 
@@ -85,6 +88,7 @@ int empty(Queue* queue)
 void clear (Queue* queue)
 {
 	free(queue->data);
+	free(queue->NIL);
 	free(queue);
 }
 
